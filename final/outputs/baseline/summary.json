@@ -1,0 +1,26 @@
+{
+  "best_model": "LinearSVM",
+  "text_col": "text_tokenized",
+  "n_aspects": 12,
+  "val_overall": {
+    "LogReg": {
+      "macro_f1": 0.4003,
+      "micro_f1": 0.8666,
+      "f1_opinion_only": 0.1797
+    },
+    "LinearSVM": {
+      "macro_f1": 0.4212,
+      "micro_f1": 0.8649,
+      "f1_opinion_only": 0.2008
+    }
+  },
+  "test_overall": {
+    "macro_f1": 0.456,
+    "micro_f1": 0.8719,
+    "f1_opinion_only": 0.2183
+  },
+  "tfidf_shape": [
+    2032,
+    33615
+  ]
+}

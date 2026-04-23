@@ -1,0 +1,37 @@
+{
+  "source_file": "VLSP2018-SA-train.txt",
+  "review_col": "text",
+  "aspect_cols": [
+    "FOOD#QUALITY",
+    "FOOD#STYLE&OPTIONS",
+    "AMBIENCE#GENERAL",
+    "RESTAURANT#GENERAL",
+    "SERVICE#GENERAL",
+    "FOOD#PRICES",
+    "RESTAURANT#PRICES",
+    "LOCATION#GENERAL",
+    "RESTAURANT#MISCELLANEOUS",
+    "DRINKS#STYLE&OPTIONS",
+    "DRINKS#PRICES",
+    "DRINKS#QUALITY"
+  ],
+  "format_type": "sparse",
+  "tokenizer": "pyvi",
+  "config": {
+    "lowercase": true,
+    "nfc_normalize": true,
+    "remove_url": true,
+    "remove_email": true,
+    "remove_emoji": false,
+    "collapse_repeat": true,
+    "tokenize": true,
+    "min_words": 2,
+    "max_words": 200,
+    "random_state": 42
+  },
+  "n_rows": {
+    "train": 2032,
+    "val": 436,
+    "test": 436
+  }
+}

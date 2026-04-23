@@ -1,0 +1,62 @@
+{
+  "FOOD#QUALITY": {
+    "positive": 0.383,
+    "neutral": 3.0361,
+    "negative": 16.6987
+  },
+  "FOOD#STYLE&OPTIONS": {
+    "positive": 0.3867,
+    "neutral": 3.8356,
+    "negative": 6.5249
+  },
+  "AMBIENCE#GENERAL": {
+    "positive": 0.4758,
+    "neutral": 1.9187,
+    "negative": 2.6517
+  },
+  "RESTAURANT#GENERAL": {
+    "positive": 0.3544,
+    "neutral": 10.5769,
+    "negative": 11.9565
+  },
+  "SERVICE#GENERAL": {
+    "positive": 0.4315,
+    "negative": 2.4647,
+    "neutral": 3.6103
+  },
+  "FOOD#PRICES": {
+    "positive": 0.6633,
+    "neutral": 0.833,
+    "negative": 3.4261
+  },
+  "RESTAURANT#PRICES": {
+    "positive": 0.5333,
+    "neutral": 1.1481,
+    "negative": 3.9365
+  },
+  "LOCATION#GENERAL": {
+    "neutral": 0.7521,
+    "positive": 0.9167,
+    "negative": 1.7255
+  },
+  "RESTAURANT#MISCELLANEOUS": {
+    "positive": 0.5802,
+    "negative": 1.175,
+    "neutral": 2.35
+  },
+  "DRINKS#STYLE&OPTIONS": {
+    "positive": 0.3569,
+    "negative": 7.5833,
+    "neutral": 15.1667
+  },
+  "DRINKS#PRICES": {
+    "positive": 0.5912,
+    "neutral": 1.119,
+    "negative": 2.4103
+  },
+  "DRINKS#QUALITY": {
+    "positive": 0.4078,
+    "negative": 2.8889,
+    "neutral": 4.9524
+  }
+}

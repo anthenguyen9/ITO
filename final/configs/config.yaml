@@ -1,0 +1,66 @@
+absa:
+  batch_size: 16
+  epochs: 10
+  learning_rate: 2e-5
+  max_length: 256
+  model_name: vinai/phobert-base-v2
+  target_macro_f1: 0.8
+  warmup_ratio: 0.1
+paths:
+  data_augmented: data/augmented
+  data_labeled: data/labeled
+  data_processed: data/processed
+  data_raw: data/raw
+  models: models
+project:
+  name: AI-Powered ABSA & RAG Chatbot
+  version: 1.0.0
+rag:
+  llm: llama3
+  max_context_length: 2048
+  top_k_retrieval: 5
+trend:
+  min_reviews_per_window: 10
+  similarity_threshold: 0.75
+  window: month
+vectordb:
+  collection_name: restaurant_reviews
+  embedding_dim: 768
+  embedding_model: vinai/phobert-base-v2
+  provider: chromadb
+vlsp2018:
+  aspect_categories:
+  - FOOD#QUALITY
+  - FOOD#PRICE
+  - FOOD#STYLE_OPTIONS
+  - DRINKS#QUALITY
+  - DRINKS#PRICES
+  - DRINKS#STYLE_OPTIONS
+  - RESTAURANT#PRICES
+  - RESTAURANT#GENERAL
+  - RESTAURANT#MISCELLANEOUS
+  - AMBIENCE#GENERAL
+  - LOCATION#GENERAL
+  - SERVICE#GENERAL
+  aspects:
+  - FOOD
+  - DRINKS
+  - PRICE
+  - AMBIANCE
+  - LOCATION
+  - SERVICE
+  - OTHER
+  dev_file: ..\data\raw\VLSP2018-SA-dev.txt
+  entities:
+  - FOOD
+  - DRINKS
+  - RESTAURANT
+  - AMBIENCE
+  - LOCATION
+  - SERVICE
+  sentiments:
+  - positive
+  - negative
+  - neutral
+  test_file: ..\data\raw\VLSP2018-SA-test.txt
+  train_file: ..\data\raw\VLSP2018-SA-train.txt

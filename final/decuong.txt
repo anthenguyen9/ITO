@@ -1,0 +1,170 @@
+Đề Cương
+
+Thông tin	Nội dung
+Tên đề tài (Tiếng Việt)	Hệ thống phân tích cảm xúc đa khía cạnh, phát hiện xu hướng thời gian và gợi ý nhà hàng thông minh dựa trên trí tuệ nhân tạo
+Tên đề tài (Tiếng Anh)	AI-Powered Aspect-Based Sentiment Analysis, Temporal Trend Detection, and RAG-Enhanced Chatbot Recommendation for Food Reviews
+Học viên	Nguyễn Thế An
+Chương trình đào tạo	Thạc sĩ Kỹ thuật Phần mềm
+Giảng viên hướng dẫn	Nguyễn Gia Trí
+Năm học	2025–2026
+
+
+1. Giới Thiệu và Đặt Vấn Đề
+1.1 Bối Cảnh Nghiên Cứu
+Sự bùng nổ của các nền tảng đánh giá trực tuyến như Google Maps, Foody, TripAdvisor và Zomato đã tạo ra một khối lượng khổng lồ dữ liệu đánh giá nhà hàng, thực phẩm từ người dùng. Tại Việt Nam, ngành dịch vụ ẩm thực đang phát triển mạnh mẽ với sự gia tăng nhanh chóng của các ứng dụng giao đồ ăn như GrabFood, ShopeeFood và Baemin, tạo ra hàng triệu đánh giá mỗi ngày. Người tiêu dùng ngày càng phụ thuộc vào các đánh giá trực tuyến để đưa ra quyết định lựa chọn nơi ăn uống, trong khi các nhà hàng cũng cần phân tích phản hồi khách hàng để cải thiện dịch vụ.[1]
+Tuy nhiên, thể tích đánh giá khổng lồ này khiến người dùng khó trích xuất thông tin hữu ích một cách hiệu quả. Các giải pháp hiện tại như hệ thống đánh giá sao của Google Maps hay phân tích cảm xúc tổng thể (overall sentiment) chưa cung cấp được cái nhìn chi tiết theo từng khía cạnh cụ thể (ví dụ: chất lượng món ăn, giá cả, phục vụ, không gian) cũng như chưa theo dõi được sự biến đổi của các xu hướng theo thời gian. Thêm vào đó, các chatbot gợi ý nhà hàng truyền thống thiếu khả năng khai thác thông tin địa phương có cấu trúc, dẫn đến các gợi ý kém cá nhân hóa và thiếu chính xác.[2][3][4]
+1.2 Khoảng Trống Nghiên Cứu
+Qua khảo sát các công trình liên quan, nghiên cứu này xác định ba khoảng trống chính:
+    • Khoảng trống 1 – Phân tích cảm xúc tiếng Việt theo khía cạnh (Vietnamese ABSA): Trong khi PhoBERT đã chứng minh hiệu quả vượt trội trong phân tích cảm xúc tiếng Việt với độ chính xác lên đến 92.74%, việc ứng dụng mô hình này vào bài toán phân tích đa khía cạnh (Aspect-Based Sentiment Analysis – ABSA) cụ thể cho lĩnh vực ẩm thực địa phương tại Việt Nam vẫn còn hạn chế. Tập dữ liệu chuẩn VLSP 2018 chỉ mới cung cấp nền tảng ban đầu nhưng chưa phủ rộng các khía cạnh đặc thù của ẩm thực Việt.[5][6][7]
+    • Khoảng trống 2 – Phát hiện xu hướng thời gian: Phần lớn các nghiên cứu hiện tại tập trung vào phân tích cảm xúc theo dạng tĩnh (static sentiment analysis), chưa xem xét sự biến đổi trong quan điểm của khách hàng theo thời gian. Trong khi đó, hành vi và cảm nhận của người tiêu dùng trong lĩnh vực ẩm thực thường thay đổi liên tục do các yếu tố như chất lượng dịch vụ, xu hướng tiêu dùng và trải nghiệm thực tế. Mặc dù các phương pháp phát hiện xu hướng như BERTopic và BERTrend đã được đề xuất, chúng chủ yếu được đánh giá trên các tập dữ liệu tin tức hoặc mạng xã hội quy mô lớn, và chưa được nghiên cứu đầy đủ trong bối cảnh đánh giá nhà hàng với đặc thù dữ liệu ngắn, phi cấu trúc và mang tính chủ quan cao.[8]
+    • Khoảng trống 3 – Tích hợp RAG và cơ sở dữ liệu vector: Các hệ thống LLM hiện đại (như GPT-4, Llama) có nguy cơ hallucination cao khi trả lời các câu hỏi về thông tin địa phương, cụ thể. Kỹ thuật Retrieval-Augmented Generation (RAG) được chứng minh là có thể giảm thiểu vấn đề này, nhưng việc tích hợp RAG với dữ liệu sentiment đã được phân tích theo khía cạnh và xu hướng thời gian để xây dựng chatbot gợi ý nhà hàng thông minh là hướng nghiên cứu chưa được khai thác triệt để.[9][10][11][12]
+2. Mục Tiêu Nghiên Cứu
+Luận văn đặt ra năm mục tiêu nghiên cứu cụ thể:
+    • RO1: Xây dựng mô hình Phân tích Cảm xúc Đa Khía cạnh (ABSA) cho đánh giá nhà hàng tiếng Việt dựa trên PhoBERT, phân loại cảm xúc (tích cực, trung tính, tiêu cực) cho các khía cạnh: chất lượng món ăn, giá cả, phục vụ, không gian và vị trí địa lý.
+    • RO2: Phát triển module phát hiện xu hướng thời gian sử dụng BERTopic/BERTrend để phát hiện các chủ đề, đặc điểm nổi bật và xu hướng thay đổi theo thời gian từ dữ liệu đánh giá.
+    • RO3: Thiết kế kiến trúc cơ sở dữ liệu vector (vector database) tích hợp kết quả ABSA và thông tin nhà hàng, cho phép tìm kiếm ngữ nghĩa (semantic search) hiệu quả.
+    • RO4: Xây dựng chatbot gợi ý nhà hàng ứng dụng kiến trúc RAG (Retrieval-Augmented Generation) kết hợp với LLM, có khả năng trả lời truy vấn ngôn ngữ tự nhiên dựa trên dữ liệu đã phân tích, đồng thời cá nhân hóa kết quả gợi ý bằng cách đối chiếu taste profile của khách hàng với dữ liệu nhà hàng trên vector database nhằm hạn chế tối đa hallucination và tăng độ phù hợp của gợi ý.
+    • RO5: Đánh giá toàn diện hệ thống tích hợp và so sánh với các baseline hiện có.
+3. Câu Hỏi Nghiên Cứu
+    • RQ1: Mô hình PhoBERT fine-tuned đạt được mức độ chính xác và F1-score ở mức nào khi thực hiện ABSA trên các đánh giá nhà hàng tiếng Việt, so với các baseline như SVM, BERT đa ngôn ngữ?
+    • RQ2: Phương pháp phát hiện xu hướng thời gian dựa trên BERTopic/BERTrend có thể xác định và theo dõi các xu hướng mới nổi từ dữ liệu đánh giá nhà hàng theo chuỗi thời gian với độ tin cậy như thế nào?
+    • RQ3: Kiến trúc RAG tích hợp kết quả ABSA và cơ sở dữ liệu vector có cải thiện chất lượng gợi ý nhà hàng (đo bằng độ chính xác, sự liên quan, tính cá nhân hóa và tỷ lệ hallucination) so với hệ thống chỉ dựa trên LLM đơn thuần?
+    • RQ4: Hệ thống tích hợp toàn diện (ABSA + Temporal Trend + RAG Chatbot) có cung cấp giá trị thực tế vượt trội hơn các hệ thống đơn lẻ hiện có đối với người dùng cuối?
+4. Tổng Quan Tài Liệu
+4.1 Phân Tích Cảm Xúc Đa Khía Cạnh (ABSA)
+Phân tích cảm xúc đa khía cạnh (Aspect-Based Sentiment Analysis – ABSA) là bài toán NLP nhằm xác định cả khía cạnh (aspect) lẫn cực tính cảm xúc (sentiment polarity) liên quan đến khía cạnh đó trong cùng một văn bản. Khác với phân tích cảm xúc tổng thể, ABSA cho phép hiểu rằng một đánh giá có thể mang tính tích cực về món ăn nhưng tiêu cực về dịch vụ phục vụ.[13][14][15]
+Các mô hình Transformer, đặc biệt là BERT và các biến thể, đã chứng minh vượt trội so với các phương pháp truyền thống trong bài toán ABSA. Đối với tiếng Việt, PhoBERT – mô hình được huấn luyện sẵn đặc thù cho tiếng Việt – đã đạt kết quả vượt trội trong các tác vụ NLP, bao gồm phân tích cảm xúc trên đánh giá điện thoại (độ chính xác 92.74%) và phân tích ABSA trên tập dữ liệu VLSP 2018 với F1-score 83% trong bài toán Aspect Category Detection (ACD) kết hợp Sentiment Polarity Classification (SPC) cho lĩnh vực nhà hàng. Nghiên cứu tại PACLIC 2022 cũng chỉ ra tiềm năng của ABSA tiếng Việt trong lĩnh vực đánh giá mỹ phẩm, mở ra khả năng mở rộng sang lĩnh vực ẩm thực.[16][6][17][5]
+4.2 Phát Hiện Xu Hướng Thời Gian từ Văn Bản
+Phát hiện xu hướng (trend detection) từ luồng dữ liệu văn bản theo thời gian là lĩnh vực nghiên cứu đang phát triển mạnh. BERTopic – một phương pháp topic modeling dựa trên embedding ngữ cảnh – đã được ứng dụng trong các nghiên cứu phân tích xu hướng trong nông nghiệp chính xác và dự báo giá thực phẩm. BERTrend, một framework mở rộng từ BERTopic, giới thiệu cơ chế online learning để theo dõi sự tiến hóa của các chủ đề theo thời gian, phân loại tín hiệu thành noise, weak signal và strong signal. Nghiên cứu về hành vi người tiêu dùng thực phẩm cũng chỉ ra rằng các kỹ thuật NLP hiện đại có khả năng phát hiện các xu hướng tiêu dùng mới nổi từ dữ liệu mạng xã hội và đánh giá trực tuyến quy mô lớn.[18][3][19][20][8]
+4.3 Hệ Thống Gợi Ý Dựa trên RAG và LLM
+Retrieval-Augmented Generation (RAG) là kiến trúc kết hợp giữa các mô hình ngôn ngữ lớn (LLMs) và cơ chế truy xuất thông tin từ cơ sở dữ liệu bên ngoài, nhằm cung cấp câu trả lời chính xác, có căn cứ và giảm thiểu hiện tượng hallucination. RAG đã được ứng dụng trong các hệ thống hỏi đáp (Q&A) cho đánh giá nhà hàng sử dụng ChromaDB, Sentence Transformers và OpenAI API, cũng như trong việc xây dựng chatbot nhà hàng thông minh dựa trên các mô hình LLM mã nguồn mở như Llama.[10][12][9]
+Về kiến trúc cơ sở dữ liệu vector, các hệ thống như Pinecone, Weaviate và Qdrant hỗ trợ tìm kiếm lai (hybrid search), kết hợp giữa dense vector search và sparse retrieval (BM25), cho phép cân bằng giữa tìm kiếm ngữ nghĩa và tìm kiếm theo từ khóa. Gần đây, các nghiên cứu cũng bắt đầu khai thác việc biểu diễn cả thực thể (nhà hàng) và người dùng dưới dạng embedding trong cùng không gian vector, từ đó hỗ trợ các cơ chế gợi ý cá nhân hóa dựa trên mức độ tương đồng ngữ nghĩa. Ví dụ, ChatDiet – một framework LLM cho gợi ý thực phẩm cá nhân hóa – đạt hiệu quả lên đến 92% trong các bài kiểm tra, cho thấy tiềm năng lớn của việc tích hợp mô hình ngôn ngữ với biểu diễn sở thích người dùng (taste profile) trong hệ thống gợi ý.[21][2]
+Bên cạnh đó, các hệ thống RAG hiện đại đang được mở rộng theo hướng tích hợp khả năng truy cập công cụ và dữ liệu bên ngoài thông qua các cơ chế như tool calling hoặc MCP (Model Context Protocol), cho phép mô hình không chỉ truy xuất dữ liệu tĩnh từ vector database mà còn tương tác với các nguồn dữ liệu thời gian thực (ví dụ: vị trí, giờ mở cửa, hoặc thông tin nhà hàng cập nhật). Điều này góp phần nâng cao tính ngữ cảnh và khả năng ứng dụng thực tế của hệ thống gợi ý.
+Về đánh giá hệ thống RAG, RAGAS (Retrieval-Augmented Generation Assessment) cung cấp một framework đánh giá không cần tham chiếu (reference-free), cho phép đo lường hiệu quả của pipeline RAG theo nhiều tiêu chí như context precision, faithfulness và answer relevancy. Tuy nhiên, các nghiên cứu gần đây chỉ ra rằng việc phát hiện và kiểm soát hallucination trong RAG vẫn còn là một thách thức, với nhiều phương pháp hiện tại chưa vượt qua mức 78% F1 balanced accuracy, cho thấy vẫn còn dư địa cải thiện đáng kể trong việc đảm bảo tính chính xác và độ tin cậy của hệ thống.[11][12]
+4.4 Hệ Thống Gợi Ý Kết Hợp
+Hệ thống gợi ý kết hợp (hybrid recommendation system) tích hợp collaborative filtering và content-based filtering đã được nghiên cứu rộng rãi. Việc bổ sung phân tích cảm xúc vào hệ thống gợi ý có thể lấp đầy khoảng trống dữ liệu tương tác và cung cấp lý do gợi ý có thể giải thích được, đây là điểm yếu của các hệ thống collaborative filtering thuần túy. Graph RAG với Neo4j cũng cho thấy hiệu quả trong việc tạo ra các gợi ý thực phẩm đa chiều.[22][23][24]
+5. Phạm Vi Nghiên Cứu
+5.1 Phạm Vi Thực Hiện
+    • Thu thập và xây dựng tập dữ liệu đánh giá nhà hàng tiếng Việt từ Google Maps và Foody (hoặc sử dụng tập dữ liệu công khai VLSP 2018 kết hợp với dữ liệu mở rộng tự thu thập), bao gồm cả thông tin thời gian và metadata phục vụ phân tích xu hướng.
+    • Huấn luyện và đánh giá mô hình ABSA dựa trên PhoBERT cho năm khía cạnh: chất lượng món ăn (food quality), giá cả (price/value), phục vụ (service), không gian (ambiance), vị trí (location).
+    • Xây dựng module phát hiện xu hướng thời gian sử dụng BERTopic/BERTrend.
+    • Thiết kế và triển khai cơ sở dữ liệu vector (Weaviate hoặc ChromaDB) lưu trữ thông tin nhà hàng, embedding của đánh giá, kết quả ABSA và biểu diễn ngữ nghĩa của taste profile người dùng, phục vụ tìm kiếm ngữ nghĩa và so khớp cá nhân hóa.
+    • Phát triển prototype chatbot gợi ý nhà hàng ứng dụng kiến trúc RAG với LangChain và LLM (GPT hoặc Llama 3), kết hợp cơ chế truy xuất từ vector database và tích hợp MCP server (tool calling) để khai thác dữ liệu bên ngoài theo ngữ cảnh (ví dụ: vị trí, giờ mở cửa), đồng thời cá nhân hóa kết quả dựa trên taste profile.
+    • Đánh giá hệ thống toàn diện theo cả phương pháp định lượng và định tính, bao gồm đánh giá hiệu quả của mô hình ABSA, độ chính xác của phát hiện xu hướng, chất lượng phản hồi của chatbot RAG (theo các chỉ số như faithfulness, relevance) và mức độ cải thiện của cơ chế gợi ý cá nhân hóa so với các baseline.
+5.2 Phạm Vi Ngoài Đề Tài
+    • Triển khai thương mại hay production deployment.
+    • Tích hợp hệ thống đặt bàn, thanh toán trực tuyến.
+    • Phân tích dữ liệu hình ảnh (image-based review analysis).
+    • Hỗ trợ các ngôn ngữ ngoài tiếng Việt và tiếng Anh.
+6. Phương Pháp Nghiên Cứu
+6.1 Tổng Quan Kiến Trúc Hệ Thống
+Hệ thống đề xuất gồm bốn module tích hợp theo pipeline:
+[Thu thập dữ liệu] → [Tiền xử lý NLP] → [ABSA Module] → [Trend Detection Module]
+                                                              ↓
+[Vector Database] ← [Indexing & Embedding] ← [Kết quả phân tích]
+      ↓
+[RAG Retrieval] → [LLM Generator] → [Chatbot Interface]
+
+
+
+6.2 Giai Đoạn 1: Thu Thập và Tiền Xử Lý Dữ Liệu
+Thu thập dữ liệu:
+    • Sử dụng tập dữ liệu VLSP 2018 ABSA (lĩnh vực nhà hàng) làm tập dữ liệu huấn luyện cơ sở.[7]
+    • Thu thập bổ sung đánh giá nhà hàng từ Google Maps (thông qua Places API hoặc dữ liệu công khai) và Foody để mở rộng tập dữ liệu, đặc biệt thu thập metadata thời gian để phục vụ phát hiện xu hướng.[1]
+    • Tuân thủ điều khoản sử dụng dữ liệu (Terms of Service) và quy định pháp lý về thu thập dữ liệu.
+Tiền xử lý:
+    • Làm sạch văn bản: loại bỏ HTML, URL, emoji dư thừa, chuẩn hóa Unicode tiếng Việt.
+    • Phân đoạn từ (word segmentation) sử dụng VnCoreNLP hoặc underthesea.
+    • Xử lý mất cân bằng nhãn (class imbalance) bằng SMOTE hoặc oversampling.
+    • Gán nhãn bán tự động kết hợp quy tắc và kiểm tra thủ công bởi annotators.
+6.3 Giai Đoạn 2: Xây Dựng Mô Hình ABSA
+Kiến trúc mô hình:
+Luận văn áp dụng phương pháp multi-task learning trên nền tảng PhoBERT-base-v2, gồm hai nhiệm vụ song song:
+    1. Aspect Category Detection (ACD): Phân loại các khía cạnh xuất hiện trong câu đánh giá (multi-label classification).
+    2. Sentiment Polarity Classification (SPC): Phân loại cực tính cảm xúc cho mỗi khía cạnh được phát hiện (positive / neutral / negative).
+Kiến trúc tham khảo phương pháp Multi-task với Multi-branch đã đạt F1-score 83% trên tập dữ liệu VLSP 2018 Restaurant.[5]
+Các baseline so sánh:
+    • SVM với TF-IDF features
+    • BERT đa ngôn ngữ (mBERT)
+    • PhoBERT fine-tuned đơn nhiệm vụ (single-task)
+    • PhoBERT multi-task không có multi-branch
+Độ đo đánh giá: Precision, Recall, F1-score (macro và micro), Accuracy, theo quy chuẩn đánh giá ABSA.
+6.4 Giai Đoạn 3: Phát Hiện Xu Hướng Thời Gian
+Phương pháp:
+    • Áp dụng BERTopic trong chế độ online learning (tương tự BERTrend) để phân tích sự tiến hóa của các chủ đề và xu hướng theo trục thời gian.[8]
+    • Nhóm đánh giá theo khoảng thời gian (tháng/quý), thực hiện topic modeling trên từng cửa sổ thời gian (temporal window), sau đó merge và so sánh các topic model qua cosine similarity.
+    • Phân loại tín hiệu: noise, weak signal, strong signal dựa trên tần suất và tốc độ tăng trưởng của chủ đề.[8]
+    • Sử dụng LLM để diễn giải tự động nhãn tên chủ đề, tăng khả năng giải thích (interpretability).[8]
+Ứng dụng trong hệ thống:
+    • Phát hiện các khía cạnh/chủ đề đang nhận được nhiều phản hồi tích cực/tiêu cực gần đây.
+    • Xây dựng chỉ số "trend score" cho từng nhà hàng theo từng khía cạnh.
+6.5 Giai Đoạn 4: Xây Dựng RAG Chatbot
+Cơ sở dữ liệu vector:
+    • Lưu trữ thông tin nhà hàng (tên, địa chỉ, loại ẩm thực, giờ mở cửa) kết hợp với vector đặc trưng tổng hợp từ kết quả ABSA (sentiment score theo khía cạnh) và trend score.
+    • So sánh Weaviate và ChromaDB về hiệu năng, hỗ trợ hybrid search (dense + BM25).[26][21]
+    • Sử dụng Sentence Transformers (multilingual) để tạo embedding cho văn bản đánh giá.[9]
+Kiến trúc RAG:
+    • Sử dụng LangChain làm framework orchestration.
+    • Khi nhận truy vấn: (1) Phân tích ý định người dùng, (2) Truy xuất context liên quan từ vector database, (3) Augment prompt với context, (4) LLM sinh câu trả lời có căn cứ.
+    • Hỗ trợ truy vấn đa lượt (multi-turn conversation) với lịch sử hội thoại.
+    • Tích hợp guardrail để xử lý câu hỏi ngoài phạm vi.
+Đánh giá chatbot:
+    • Định lượng: Sử dụng RAGAS framework để đo context precision, faithfulness, answer relevancy; đo tỷ lệ hallucination.[12]
+    • Định tính: User study với tối thiểu 20 người dùng thực tế, thu thập phản hồi theo thang Likert 5 mức về tính hữu ích, chính xác và trải nghiệm.
+7. Tính Mới và Đóng Góp Khoa Học
+Luận văn đóng góp các giá trị khoa học và thực tiễn sau:
+    1. Tập dữ liệu mở rộng: Xây dựng và công bố tập dữ liệu ABSA tiếng Việt cho lĩnh vực ẩm thực với nhãn thời gian, bổ sung và mở rộng tập dữ liệu VLSP 2018.[7]
+    2. Mô hình ABSA cải tiến: Áp dụng và so sánh phương pháp multi-task PhoBERT với kiến trúc multi-branch, đề xuất cải tiến phù hợp đặc thù ngôn ngữ và văn hóa ẩm thực Việt Nam.[5]
+    3. Framework tích hợp độc đáo: Đề xuất pipeline tích hợp đầu cuối (end-to-end) ABSA + Temporal Trend + RAG Chatbot, một hướng tiếp cận chưa được khai thác đầy đủ trong văn献 hiện có.[2][9]
+    4. Ứng dụng thực tiễn cao: Hệ thống có thể được ứng dụng trực tiếp trong các nền tảng ẩm thực Việt Nam (Foody, GrabFood), hỗ trợ cả người dùng tìm nhà hàng lẫn chủ nhà hàng phân tích phản hồi khách hàng.[3][1]
+8. Kết Quả Dự Kiến
+8.1 Kết Quả Kỹ Thuật
+    • Module ABSA: Mô hình PhoBERT fine-tuned đạt Macro F1 ≥ 80% trên tập kiểm tra VLSP 2018 Restaurant, vượt qua tất cả baseline so sánh.
+    • Module Trend Detection: Framework phát hiện xu hướng thời gian có thể xác định các chủ đề mới nổi với độ trễ phát hiện (detection lag) ≤ 4 tuần.
+    • Chatbot RAG: Đạt faithfulness score ≥ 0.85 theo đánh giá RAGAS; tỷ lệ hallucination thấp hơn baseline LLM thuần túy ít nhất 30%; điểm hài lòng người dùng ≥ 4.0/5.0 (thang Likert).
+8.2 Sản Phẩm Luận Văn
+    • Báo cáo luận văn thạc sĩ hoàn chỉnh.
+    • Bộ mã nguồn (source code) toàn bộ hệ thống, được tổ chức theo module và có tài liệu đầy đủ.
+    • Tập dữ liệu đã được gán nhãn và mở rộng (nếu điều kiện pháp lý cho phép).
+    • Prototype ứng dụng demo hệ thống chatbot gợi ý nhà hàng.
+    • Bài báo khoa học (ít nhất 1 bài) được nộp/chấp nhận tại hội nghị khoa học trong nước hoặc quốc tế.
+
+9. Thách Thức và Giải Pháp
+Thách Thức	Mô Tả	Giải Pháp Đề Xuất
+Chất lượng dữ liệu	Đánh giá trực tuyến thường chứa tiếng lóng, lỗi chính tả, ngôn ngữ mơ hồ	Tiền xử lý chuyên sâu; xây dựng từ điển đặc thù lĩnh vực ẩm thực
+Mất cân bằng nhãn	Nhãn "trung tính" thường ít hơn nhiều so với "tích cực/tiêu cực"	Kỹ thuật SMOTE, weighted loss function trong quá trình huấn luyện
+Ràng buộc pháp lý dữ liệu	Giới hạn trong thu thập dữ liệu từ API thương mại	Ưu tiên dữ liệu công khai, VLSP 2018; xin phép từ các nền tảng
+Chi phí tính toán LLM	API LLM thương mại có chi phí cao; LLM local tốn tài nguyên	Sử dụng mô hình mã nguồn mở (Llama 3, Qwen) cho prototype; caching kết quả
+Hallucination trong RAG	LLM có thể tạo thông tin sai dù có ngữ cảnh	Thiết kế prompt chặt chẽ; áp dụng guardrail; đánh giá faithfulness bằng RAGAS[11][12]
+Phạm vi xu hướng ngắn hạn	Thiếu dữ liệu lịch sử dài hạn cho trend detection	Bắt đầu từ tập hiện có, mô phỏng temporal window bằng cách chia nhỏ theo timestamp
+
+
+10. Kế Hoạch Thực Hiện
+Giai đoạn	Tháng	Nhiệm vụ	Đầu ra
+1. Nghiên cứu nền	1	Tổng quan tài liệu chuyên sâu; xác định phương pháp; thiết kế kiến trúc chi tiết	Chương 1, 2 luận văn
+2. Thu thập dữ liệu	1–2	Thu thập, làm sạch, gán nhãn dữ liệu; xây dựng dataset pipeline	Tập dữ liệu đã gán nhãn
+3. Phát triển ABSA	2–3	Fine-tune PhoBERT; thực nghiệm đa baseline; phân tích lỗi	Mô hình ABSA + báo cáo thực nghiệm
+4. Trend Detection	2–3	Cài đặt BERTopic/BERTrend; tích hợp phân tích thời gian	Module phát hiện xu hướng
+5. RAG Chatbot	3–4	Xây dựng vector DB; phát triển RAG pipeline; tích hợp LLM	Prototype chatbot
+6. Đánh giá	4–5	User study; đánh giá định lượng RAGAS; so sánh baseline	Kết quả đánh giá
+7. Hoàn thiện	4–5	Viết luận văn; chuẩn bị bài báo; bảo vệ	Luận văn hoàn chỉnh
+
+Tổng thời gian: 5 tháng
+
+11. Tài Liệu Tham Khảo Chính
+    1. Nguyen DQ, Nguyen AT. PhoBERT: Pre-trained language models for Vietnamese. InFindings of the association for computational linguistics: EMNLP 2020 2020 Nov (pp. 1037-1042).
+    2. Dang HQ, Do TH. Multi-task solution for aspect category sentiment analysis on vietnamese datasets. In2022 IEEE International Conference on Cybernetics and Computational Intelligence (CyberneticsCom) 2022 Jun 16 (pp. 404-409). IEEE.
+    3. Grootendorst, Maarten. “BERTopic: Neural Topic Modeling with a Class-Based TF-IDF Procedure.” arXiv, 2022, arXiv:2203.05794.
+    4. Gao, Yunfan, et al. “Retrieval-Augmented Generation for Large Language Models: A Survey.” arXiv, 2023, arXiv:2312.10997.
+    5. Yang, Zhongqi, et al. “ChatDiet: Empowering Personalized Nutrition-Oriented Food Recommender Chatbots through an LLM-Augmented Framework.” arXiv, 2024, arXiv:2403.00781.[2]
+    6. Es, Shahul, et al. “RAGAs: Automated Evaluation of Retrieval Augmented Generation.” Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations, Association for Computational Linguistics, 2024, pp. 150–158.[12]
+    7. Vu, Tu, et al. “VLSP Shared Task: Sentiment Analysis.” Journal of Computer Science and Cybernetics, 2019.[7]
+    8. Guvenc, T. “Building an AI-Powered Restaurant Review Q&A System with RAG and ChromaDB.”[9]
+    9. Frermann, Lea, and Mirella Lapata. “A Bayesian Model of Diachronic Meaning Change.” Transactions of the Association for Computational Linguistics, vol. 4, 2016, pp. 31–45. 
+    10. Jacovi, Alon, et al. “The FACTS Grounding Leaderboard: Benchmarking LLMs’ Ability to Ground Responses to Long-Form Input.” arXiv, 2025, arXiv:2501.03200. [11]
+    11. Pontiki, Maria, et al. “SemEval-2016 Task 5: Aspect Based Sentiment Analysis.” Proceedings of the 10th International Workshop on Semantic Evaluation (SemEval-2016), Association for Computational Linguistics, 2016, pp. 19–30.
+    12. LangChain. “Build a RAG Agent with LangChain.” LangChain Docs, 2026. [27]
+    13. Weaviate. “Retrieval Augmented Generation (RAG).” Weaviate Documentation, 2026. [21]
+    14. Tamber, Manveer Singh, et al. “Benchmarking LLM Faithfulness in RAG with Evolving Leaderboards.” Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing: Industry Track, 2025. [11]
+    15. Zhou, Pengfei, et al. “FoodSky: A Food-Oriented Large Language Model that Can Pass the Chef and Dietetic Examination.” Patterns, 2025. [29]
+
